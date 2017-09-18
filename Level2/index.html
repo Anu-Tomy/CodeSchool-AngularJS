@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html ng-app="gemStore">
+  <head>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+    <script type="text/javascript" src="angular.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+  </head>
+  <!-- Attach the TabController to the <section> element with the .tab class.
+Trigger the setTab method when a link inside a tab is clicked. 
+Add this to each of the tab links. Pass in the number of the tab, in this case 1, 2 or 3.
+Use the isSet method to show the corresponding tab. You'll need to add a directive to each of the <div> elements in .tab.
+Add the active class to the correct <li> when each tab is clicked. You'll need to add a directive to each <li> in .nav.
+Within the Description tab, output the product's description within the <blockquote> element.
+Within the Specs tab, output the product's shine value. It should look something like this within the <blockquote> element: "Shine: 4".
+-->
+  <body class="list-group" ng-controller="StoreController as store">
+    <header>
+      <h1 class="text-center">Flatlander Crafted Gems</h1>
+      <h2 class="text-center">– an Angular store –</h2>
+    </header>
+    <div class="list-group-item" ng-repeat="product in store.products">
+      <h3>
+        {{product.name}}
+        <em class="pull-right">{{product.price | currency}}</em>
+      </h3>
+      <section ng-show="product.images.length">
+        <img ng-src="{{product.images[0]}}" />
+        <ul class="list-inline thumbs">
+          <li class="thumbnail" ng-repeat="image in product.images">
+            <img ng-src="{{image}}" />
+          </li>
+        </ul>
+      </section>
+
+      <section class="tab" ng-controller="TabController as tab">
+        <ul class="nav nav-pills">
+          <li ng-class="{active:tab.isSet(1)}">
+            <a href ng-click="tab.setTab(1)">Description</a></li>
+          <li ng-class="{active:tab.isSet(2)}">
+            <a href ng-click="tab.setTab(2)">Specs</a></li>
+          <li ng-class="{active:tab.isSet(3)}">
+            <a href ng-click="tab.setTab(3)">Reviews</a></li>
+        </ul>
+        <div ng-show="tab.isSet(1)">
+          <h4>Description</h4>
+          <blockquote>{{product.description}}</blockquote>
+        </div>
+        <div ng-show="tab.isSet(2)">
+          <h4>Specs</h4>
+          <blockquote>Shine:{{product.shine}} </blockquote>
+        </div>
+        <div ng-show="tab.isSet(3)">
+          <h4>Reviews</h4>
+          <blockquote></blockquote>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
